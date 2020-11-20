@@ -1,34 +1,37 @@
 import { Component } from "react";
+import PropTypes from 'prop-types'
 
-export default class App extends Component{
+export default class Counter extends Component{
+  static propTypes ={
+    count:PropTypes.number.isRequired,
+    increment:PropTypes.func.isRequired,
+    decrement:PropTypes.func.isRequired
+  }
   state={
     count:0
   }
   increment =()=>{
     const num = this.select.value*1
-    const count = this.state.count
-    this.setState({count:count+num})
+    this.props.increment(num)
   }
   decrement=()=>{
     const num = this.select.value*1
-    const count = this.state.count
-    this.setState({count:count-num})
+    this.props.decrement(num)
   }
   incrementIfOdd=()=>{
     const num = this.select.value*1
-    const count = this.state.count
+    const count = this.props.count
     if(count%2===1)
-      this.setState({count:count+num})
+      this.props.increment(num)
   }
   incrementAsync=()=>{
     const num = this.select.value*1
-    const count = this.state.count
     setTimeout(()=>{
-      this.setState({count:count+num})
+      this.props.increment(num)
     },1000)
   }
   render(){
-    const {count} = this.state
+    const count = this.props.count
     return (
       <div>
         <p>click {count} times</p>
@@ -47,3 +50,5 @@ export default class App extends Component{
     )
   }
 }
+
+
